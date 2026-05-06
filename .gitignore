@@ -1,0 +1,5 @@
+#backend antigo em mongoDB
+backend/
+
+# diretorios de dependencias
+node_modules/ 
