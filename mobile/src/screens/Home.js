@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getChamados, deletarChamado } from '../services/chamadoService';
 import { getClientes } from '../services/clienteService';
 import { COLORS } from '../theme/colors';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 // Função de logout
 const logout = async (navigation) => {
@@ -89,7 +90,13 @@ export default function Home({ navigation }) {
         style={styles.logoutButton}
         onPress={() => logout(navigation)}
       >
-        <Text style={styles.logoutText}>Sair</Text>
+        <View style={styles.logoutContent}>
+  <Icon name="logout" size={18} color="#fff" />
+
+  <Text style={styles.logoutText}>
+    Sair
+  </Text>
+</View>
       </TouchableOpacity>
     </View>
     <FlatList
@@ -117,14 +124,26 @@ export default function Home({ navigation }) {
       style={styles.botao}
       onPress={() => navigation.navigate('NovoChamado')}
     >
-      <Text style={styles.botaoTexto}>+ Novo Chamado</Text>
+      <View style={styles.buttonContent}>
+  <Icon name="add-circle-outline" size={20} color="#fff" />
+
+  <Text style={styles.botaoTexto}>
+    Novo Chamado
+  </Text>
+</View>
     </TouchableOpacity>
 
     <TouchableOpacity
       style={styles.botao}
       onPress={() => navigation.navigate('Clientes')}
     >
-      <Text style={styles.botaoTexto}>Ver Clientes</Text>
+      <View style={styles.buttonContent}>
+  <Icon name="groups" size={20} color="#fff" />
+
+  <Text style={styles.botaoTexto}>
+    Clientes
+  </Text>
+</View>
     </TouchableOpacity>
 
   </View>
@@ -174,4 +193,16 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
+  
+  buttonContent: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  gap: 8,
+},
+
+logoutContent: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  gap: 5,
+},
 });
