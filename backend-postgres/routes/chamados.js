@@ -5,7 +5,7 @@ const repo = require('../repositories/chamadosRepository');
 const pool = require('../database/db');
 
 // 📌 LISTAR CHAMADOS
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
     const chamados = await repo.listarChamados();
     console.log("CHAMADOS DO BANCO:", chamados);
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 });
 
 // 📌 CRIAR CHAMADO
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   console.log('BODY RECEBIDO:', req.body);
   const { descricao, status, cliente_id } = req.body;
 
@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
   try {
     const { id } = req.params;
 
