@@ -80,6 +80,21 @@ export default function Home({ navigation }) {
     );
   }
 
+  // Funcao para contar chamados
+const totalChamados = chamados.length;
+
+const chamadosAbertos = chamados.filter(
+  c => c.status?.toLowerCase() === 'aberto'
+).length;
+
+const chamadosFinalizados = chamados.filter(
+  c => c.status?.toLowerCase() === 'finalizado'
+).length;
+
+const chamadosCriticos = chamados.filter(
+  c => c.prioridade?.toLowerCase() === 'critica'
+).length;
+
   return (
   <View style={styles.container}>
 <View style={styles.header}>
@@ -99,6 +114,51 @@ export default function Home({ navigation }) {
 </View>
       </TouchableOpacity>
     </View>
+
+<View style={styles.dashboard}>
+
+  <View style={styles.dashboardCard}>
+    <Text style={styles.dashboardNumber}>
+      {totalChamados}
+    </Text>
+
+    <Text style={styles.dashboardLabel}>
+      Total
+    </Text>
+  </View>
+
+  <View style={styles.dashboardCard}>
+    <Text style={styles.dashboardNumber}>
+      {chamadosAbertos}
+    </Text>
+
+    <Text style={styles.dashboardLabel}>
+      Abertos
+    </Text>
+  </View>
+
+  <View style={styles.dashboardCard}>
+    <Text style={styles.dashboardNumber}>
+      {chamadosFinalizados}
+    </Text>
+
+    <Text style={styles.dashboardLabel}>
+      Finalizados
+    </Text>
+  </View>
+
+  <View style={styles.dashboardCard}>
+    <Text style={styles.dashboardNumber}>
+      {chamadosCriticos}
+    </Text>
+
+    <Text style={styles.dashboardLabel}>
+      Críticos
+    </Text>
+  </View>
+
+</View>
+
     <FlatList
       data={chamados}
       keyExtractor={(item) => (item.id || item._id).toString()}
@@ -120,33 +180,26 @@ export default function Home({ navigation }) {
         );
       }}
     />
-    <TouchableOpacity
-      style={styles.botao}
-      onPress={() => navigation.navigate('NovoChamado')}
-    >
-      <View style={styles.buttonContent}>
-  <Icon name="add-circle-outline" size={20} color="#fff" />
 
-  <Text style={styles.botaoTexto}>
-    Novo Chamado
-  </Text>
+    <View style={styles.fabContainer}>
+
+  <TouchableOpacity
+    style={styles.secondaryFab}
+    onPress={() => navigation.navigate('Clientes')}
+  >
+    <Icon name="groups" size={24} color="#fff" />
+  </TouchableOpacity>
+
+  <TouchableOpacity
+    style={styles.fab}
+    onPress={() => navigation.navigate('NovoChamado')}
+  >
+    <Icon name="add" size={28} color="#fff" />
+  </TouchableOpacity>
+
 </View>
-    </TouchableOpacity>
-
-    <TouchableOpacity
-      style={styles.botao}
-      onPress={() => navigation.navigate('Clientes')}
-    >
-      <View style={styles.buttonContent}>
-  <Icon name="groups" size={20} color="#fff" />
-
-  <Text style={styles.botaoTexto}>
-    Clientes
-  </Text>
-</View>
-    </TouchableOpacity>
-
-  </View>
+     </View>
+   
 );
 
 }
@@ -205,4 +258,78 @@ logoutContent: {
   alignItems: 'center',
   gap: 5,
 },
+fabContainer: {
+  position: 'absolute',
+  right: 20,
+  bottom: 20,
+  alignItems: 'center',
+},
+
+fab: {
+  width: 64,
+  height: 64,
+  borderRadius: 32,
+
+  backgroundColor: COLORS.primary,
+
+  justifyContent: 'center',
+  alignItems: 'center',
+
+  elevation: 6,
+},
+
+secondaryFab: {
+  width: 52,
+  height: 52,
+  borderRadius: 26,
+
+  backgroundColor: COLORS.primaryDark,
+
+  justifyContent: 'center',
+  alignItems: 'center',
+
+  marginBottom: 14,
+
+  elevation: 5,
+},
+
+dashboard: {
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  justifyContent: 'space-between',
+  marginBottom: 20,
+},
+
+dashboardCard: {
+  width: '48%',
+  backgroundColor: COLORS.card,
+
+  padding: 18,
+  borderRadius: 16,
+
+  marginBottom: 12,
+
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 2,
+  },
+  shadowOpacity: 0.06,
+  shadowRadius: 4,
+
+  elevation: 3,
+},
+
+dashboardNumber: {
+  fontSize: 28,
+  fontWeight: 'bold',
+  color: COLORS.primary,
+},
+
+dashboardLabel: {
+  marginTop: 6,
+  color: COLORS.textSecondary,
+  fontSize: 14,
+},
+
 });
