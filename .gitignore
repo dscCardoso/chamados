@@ -3,3 +3,6 @@ backend/
 
 # diretorios de dependencias
 node_modules/ 
+
+# seguranca .env
+.env

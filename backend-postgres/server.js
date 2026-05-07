@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const pool = require('./database/db');
@@ -5,6 +6,7 @@ const clientesRoutes = require('./routes/clientes');
 const chamadosRoutes = require('./routes/chamados');
 const authRoutes = require('./routes/auth');
 const app = express();
+const auth = require('./middleware/auth');
 
 // middlewares
 app.use(cors());
@@ -13,12 +15,12 @@ app.use('/clientes', clientesRoutes);
 app.use('/chamados', chamadosRoutes);
 app.use('/auth', authRoutes);
 
-app.get('/health', (req, res) => {
+app.get('/health', auth, (req, res) => {
   res.json({ status: 'ok' });
 });
 
 // rota teste
-app.get('/', (req, res) => {
+app.get('/health', auth, (req, res) => {
   res.send('API PostgreSQL rodando 🚀');
 });
     
