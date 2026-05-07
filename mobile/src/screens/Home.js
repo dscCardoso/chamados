@@ -4,6 +4,7 @@ import ChamadoItem from '../components/ChamadoItem';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getChamados, deletarChamado } from '../services/chamadoService';
 import { getClientes } from '../services/clienteService';
+import { COLORS } from '../theme/colors';
 
 // Função de logout
 const logout = async (navigation) => {
@@ -134,8 +135,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 15,
-    backgroundColor: '#f2f2f2',
-  },
+    backgroundColor: COLORS.background,  },
    header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -146,11 +146,11 @@ const styles = StyleSheet.create({
   titulo: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#333',
+    color: COLORS.text,
   },
 
   botao: {
-    backgroundColor: '#007bff',
+    backgroundColor: COLORS.primary,
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   },
 
   logoutButton: {
-    backgroundColor: '#dc3545',
+    backgroundColor: COLORS.danger,
     paddingVertical: 8,
     paddingHorizontal: 14,
     borderRadius: 8,
