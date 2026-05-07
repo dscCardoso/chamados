@@ -17,7 +17,7 @@ export default function EditarChamado({ navigation, route }) {
   setClientes(response.data);
       // Set initial cliente if exists
       if (chamado.clienteId) {
-        const cliente = dados.find(c => c.id === chamado.clienteId);
+        const cliente = response.data.find(c => c.id === chamado.clienteId);
         if (cliente) {
           setClienteSelecionado(cliente);
           setBuscaCliente(cliente.nome);
