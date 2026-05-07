@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 const repo = require('../repositories/clientesRepository');
 
 // listar clientes
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
     const clientes = await repo.listarClientes();
     res.json(clientes);
@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 });
 
 // criar cliente
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   const { nome, telefone } = req.body;
 
   try {
