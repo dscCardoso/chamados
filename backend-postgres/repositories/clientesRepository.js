@@ -5,10 +5,10 @@ async function listarClientes() {
   return result.rows;
 }
 
-async function criarCliente(nome, telefone) {
+async function criarCliente(nome, telefone, empresa, endereco) {
   await pool.query(
-    'INSERT INTO clientes (nome, telefone) VALUES ($1, $2)',
-    [nome, telefone]
+    'INSERT INTO clientes (nome, telefone, empresa, endereco) VALUES ($1, $2, $3, $4)',
+    [nome, telefone, empresa, endereco]
   );
 }
 

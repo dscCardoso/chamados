@@ -16,10 +16,10 @@ router.get('/', auth, async (req, res) => {
 
 // criar cliente
 router.post('/', auth, async (req, res) => {
-  const { nome, telefone } = req.body;
+  const { nome, telefone, endereco, empresa } = req.body;
 
   try {
-    await repo.criarCliente(nome, telefone);
+    await repo.criarCliente(nome, telefone, empresa, endereco);
     res.status(201).json({ mensagem: 'Cliente criado' });
   } catch (err) {
     res.status(500).json({ erro: err.message });
