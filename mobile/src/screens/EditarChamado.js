@@ -4,7 +4,7 @@ import api from '../services/api';
 
 export default function EditarChamado({ navigation, route }) {
   const { chamado } = route.params;
-  const [titulo, setTitulo] = useState(chamado.titulo);
+  const [descricao, setDescricao] = useState(chamado.descricao);
   const [status, setStatus] = useState(chamado.status);
   const [buscaCliente, setBuscaCliente] = useState('');
   const [clientes, setClientes] = useState([]);
@@ -50,14 +50,14 @@ export default function EditarChamado({ navigation, route }) {
   }
 
   async function salvar() {
-    if (!titulo) {
+    if (!descricao.trim()) {
       Alert.alert('Erro', 'Digite uma descrição');
       return;
     }
 
     const chamadoAtualizado = {
       ...chamado,
-      titulo,
+      descricao: descricao.trim(),
       status,
       clienteId: clienteSelecionado ? clienteSelecionado.id : null,
     };
@@ -72,8 +72,8 @@ export default function EditarChamado({ navigation, route }) {
     <View style={styles.container}>
       <TextInput
         placeholder="Descreva o problema"
-        value={titulo}
-        onChangeText={setTitulo}
+        value={descricao}
+        onChangeText={setDescricao}
         style={styles.input}
       />
 

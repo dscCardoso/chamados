@@ -5,7 +5,7 @@ import { Picker } from '@react-native-picker/picker';
 import { getClientes } from '../services/clienteService';
 
 export default function NovoChamado({ navigation }) {
-  const [titulo, setTitulo] = useState('');
+  const [descricao, setDescricao] = useState('');
   const [buscaCliente, setBuscaCliente] = useState('');
   const [clientes, setClientes] = useState([]);
   const [clientesFiltrados, setClientesFiltrados] = useState([]);
@@ -58,7 +58,7 @@ if (!clienteSelecionado) {
       
 
      const novoChamado = {
-  descricao: titulo.trim(),
+  descricao: descricao.trim(),
   status: 'Aberto',
   cliente_id: clienteSelecionado?.id,
   prioridade,
@@ -79,8 +79,8 @@ if (!clienteSelecionado) {
     <View style={styles.container}>
       <TextInput
         placeholder="Descreva o problema"
-        value={titulo}
-        onChangeText={setTitulo}
+        value={descricao}
+        onChangeText={setDescricao}
         style={styles.input}
       />
 
