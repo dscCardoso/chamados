@@ -5,14 +5,21 @@ const api = axios.create({
   baseURL: 'http://10.0.2.2:3000'
 });
 
-api.interceptors.response.use(
-  response => response,
-  async error => {
+api.interceptors.request.use(
+  async (config) => {
 
-    if (error.response?.status === 401) {
-      await AsyncStorage.removeItem('token');
+    const token = await AsyncStorage.getItem('token');
+
+    console.log('TOKEN ENVIADO:', token);
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
 
+    return config;
+
+  },
+  (error) => {
     return Promise.reject(error);
   }
 );

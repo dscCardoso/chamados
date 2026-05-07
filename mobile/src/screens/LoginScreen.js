@@ -28,6 +28,8 @@ export default function LoginScreen({ navigation }) {
 
       if (response.data?.token) {
         await AsyncStorage.setItem('token', response.data.token);
+        const tokenSalvo = await AsyncStorage.getItem('token');
+console.log('TOKEN SALVO:', tokenSalvo);
         navigation.replace('App');
       } else {
         Alert.alert('Erro', 'Resposta inválida do servidor');

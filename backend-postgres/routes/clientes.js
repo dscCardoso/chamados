@@ -52,21 +52,44 @@ router.put('/:id', auth, async (req, res) => {
 
 // deletar cliente
 router.delete('/:id', auth, async (req, res) => {
-  const { id } = req.params;
 
   try {
-    await pool.query(
-      'DELETE FROM clientes WHERE id = $1',
+
+    const { id } = req.params;
+
+    const result = await pool.query(
+      'DELETE FROM clientes WHERE id = $1 RETURNING *',
       [id]
     );
 
+    if (result.rowCount === 0) {
+      return res.status(404).json({
+        error: 'Cliente não encontrado'
+      });
+    }
+
     res.json({
-      mensagem: 'Cliente deletado'
+      message: 'Cliente deletado com sucesso'
     });
 
-  } catch (err) {
-    res.status(500).json({ erro: err.message });
-  }
-});
+  } catch (error) {
 
+    console.log('ERRO DELETE CLIENTE:', error);
+
+    // Foreign Key PostgreSQL
+    if (error.code === '23503') {
+
+      return res.status(400).json({
+        error: 'Não é possível deletar este cliente pois existem chamados vinculados.'
+      });
+
+    }
+
+    res.status(500).json({
+      error: 'Erro ao deletar cliente'
+    });
+
+  }
+
+});
 module.exports = router;

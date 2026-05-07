@@ -44,7 +44,7 @@ export default function NovoChamado({ navigation }) {
   }
 
   async function salvar() {
-    if (!titulo.trim()) {
+    if (!descricao.trim()) {
   Alert.alert('Erro', 'Digite uma descrição');
   return;
 }

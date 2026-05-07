@@ -24,13 +24,7 @@ export default function Home({ navigation }) {
   const [chamados, setChamados] = useState([]);
   const [clientes, setClientes] = useState([]);
 
-//teste backend
-useEffect(() => {
-  fetch("http://10.0.2.2:3000/health")
-    .then(res => res.json())
-    .then(data => console.log("OK backend:", data))
-    .catch(err => console.log("Erro conexão:", err));
-}, []);
+
 
   // Carrega dados da API
   async function carregarDados() {

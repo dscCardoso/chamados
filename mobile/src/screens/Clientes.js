@@ -26,10 +26,33 @@ setClientes(dados);
       'Deseja deletar este cliente?',
       [
         { text: 'Cancelar', style: 'cancel' },
-        { text: 'Deletar', onPress: async () => {
-         await deletarCliente(id);
-          carregarClientes();
-        }},
+        {
+  text: 'Deletar',
+  onPress: async () => {
+
+    try {
+
+      await deletarCliente(id);
+
+      Alert.alert(
+        'Sucesso',
+        'Cliente deletado com sucesso'
+      );
+
+      carregarClientes();
+
+    } catch (error) {
+
+      Alert.alert(
+        'Erro',
+        error.response?.data?.error ||
+        'Erro ao deletar cliente'
+      );
+
+    }
+
+  }
+},
       ]
     );
   }
