@@ -97,111 +97,113 @@ const chamadosCriticos = chamados.filter(
 
   return (
   <View style={styles.container}>
-<View style={styles.header}>
+
+    {/* HEADER */}
+    <View style={styles.header}>
       <Text style={styles.titulo}>
         DeskControl
       </Text>
+
       <TouchableOpacity
         style={styles.logoutButton}
         onPress={() => logout(navigation)}
       >
         <View style={styles.logoutContent}>
-  <Icon name="logout" size={18} color="#fff" />
+          <Icon name="logout" size={20} color="#fff" />
 
-  <Text style={styles.logoutText}>
-    Sair
-  </Text>
-</View>
+          <Text style={styles.logoutText}>
+            Sair
+          </Text>
+        </View>
       </TouchableOpacity>
     </View>
 
-<View style={styles.dashboard}>
+    {/* DASHBOARD */}
+    <View style={styles.dashboard}>
 
-  <View style={styles.dashboardCard}>
-    <Text style={styles.dashboardNumber}>
-      {totalChamados}
-    </Text>
+      <View style={styles.dashboardCard}>
+        <Text style={styles.dashboardNumber}>
+          {totalChamados}
+        </Text>
 
-    <Text style={styles.dashboardLabel}>
-      Total
-    </Text>
-  </View>
+        <Text style={styles.dashboardLabel}>
+          Total
+        </Text>
+      </View>
 
-  <View style={styles.dashboardCard}>
-    <Text style={styles.dashboardNumber}>
-      {chamadosAbertos}
-    </Text>
+      <View style={styles.dashboardCard}>
+        <Text style={styles.dashboardNumber}>
+          {chamadosAbertos}
+        </Text>
 
-    <Text style={styles.dashboardLabel}>
-      Abertos
-    </Text>
-  </View>
+        <Text style={styles.dashboardLabel}>
+          Abertos
+        </Text>
+      </View>
 
-  <View style={styles.dashboardCard}>
-    <Text style={styles.dashboardNumber}>
-      {chamadosFinalizados}
-    </Text>
+      <View style={styles.dashboardCard}>
+        <Text style={styles.dashboardNumber}>
+          {chamadosFinalizados}
+        </Text>
 
-    <Text style={styles.dashboardLabel}>
-      Finalizados
-    </Text>
-  </View>
+        <Text style={styles.dashboardLabel}>
+          Finalizados
+        </Text>
+      </View>
 
-  <View style={styles.dashboardCard}>
-    <Text style={styles.dashboardNumber}>
-      {chamadosCriticos}
-    </Text>
+      <View style={styles.dashboardCard}>
+        <Text style={styles.dashboardNumber}>
+          {chamadosCriticos}
+        </Text>
 
-    <Text style={styles.dashboardLabel}>
-      Críticos
-    </Text>
-  </View>
+        <Text style={styles.dashboardLabel}>
+          Críticos
+        </Text>
+      </View>
 
-</View>
+    </View>
 
+    {/* LISTA */}
     <FlatList
       data={chamados}
       keyExtractor={(item) => (item.id || item._id).toString()}
-      renderItem={({ item }) => {
-        console.log('ITEM:', item);
-        return (
-          <ChamadoItem
-            titulo={item.descricao}
-            status={item.status}
-            clienteNome={getClienteNome(item.cliente_id)}
-            clienteEndereco={getClienteEndereco(item.cliente_id)}
-            prioridade={item.prioridade}
-            dataLimite={item.dataLimite}
-            onEdit={() =>
-              navigation.navigate('EditarChamado', { chamado: item })
-            }
-            onDelete={() => handleDeleteChamado(item.id)}
-          />
-        );
-      }}
+      renderItem={({ item }) => (
+        <ChamadoItem
+          titulo={item.descricao}
+          status={item.status}
+          clienteNome={getClienteNome(item.cliente_id)}
+          clienteEndereco={getClienteEndereco(item.cliente_id)}
+          prioridade={item.prioridade}
+          dataLimite={item.dataLimite}
+          onEdit={() =>
+            navigation.navigate('EditarChamado', { chamado: item })
+          }
+          onDelete={() => handleDeleteChamado(item.id)}
+        />
+      )}
     />
 
+    {/* BOTÕES FLUTUANTES */}
     <View style={styles.fabContainer}>
 
-  <TouchableOpacity
-    style={styles.secondaryFab}
-    onPress={() => navigation.navigate('Clientes')}
-  >
-    <Icon name="groups" size={24} color="#fff" />
-  </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.secondaryFab}
+        onPress={() => navigation.navigate('Clientes')}
+      >
+        <Icon name="groups" size={24} color="#fff" />
+      </TouchableOpacity>
 
-  <TouchableOpacity
-    style={styles.fab}
-    onPress={() => navigation.navigate('NovoChamado')}
-  >
-    <Icon name="add" size={28} color="#fff" />
-  </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.fab}
+        onPress={() => navigation.navigate('NovoChamado')}
+      >
+        <Icon name="add" size={28} color="#fff" />
+      </TouchableOpacity>
 
-</View>
-     </View>
-   
+    </View>
+
+  </View>
 );
-
 }
 const styles = StyleSheet.create({
   container: {
