@@ -54,4 +54,28 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
+// atualizar chamado
+router.put('/:id', auth, async (req, res) => {
+  const { id } = req.params;
+  const { descricao, status, cliente_id, prioridade } = req.body;
+
+  try {
+    const result = await pool.query(
+      `UPDATE chamados
+       SET descricao = $1,
+           status = $2,
+           cliente_id = $3,
+           prioridade = $4
+       WHERE id = $5
+       RETURNING *`,
+      [descricao, status, cliente_id, prioridade, id]
+    );
+
+    res.json(result.rows[0]);
+
+  } catch (err) {
+    res.status(500).json({ erro: err.message });
+  }
+});
+
 module.exports = router;
