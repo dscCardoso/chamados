@@ -79,58 +79,76 @@ export default function Home({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.titulo}>Chamados de TI</Text>
-
-      <FlatList
-        data={chamados}
-        keyExtractor={(item) => (item.id || item._id).toString()}
-        renderItem={({ item }) => {
-  console.log('ITEM:', item);
-
-  return (
-    <ChamadoItem
-      titulo={item.descricao} //  ajuste aqui
-      status={item.status}
-      clienteNome={getClienteNome(item.cliente_id)} //  ajuste aqui
-      clienteEndereco={getClienteEndereco(item.cliente_id)}
-      prioridade={item.prioridade}
-      dataLimite={item.dataLimite}
-      onEdit={() => navigation.navigate('EditarChamado', { chamado: item })}
-      onDelete={() => handleDeleteChamado(item.id)}
-    />
-  );
-}}
-      />
-
+  <View style={styles.container}>
+<View style={styles.header}>
+      <Text style={styles.titulo}>
+        DeskControl
+      </Text>
       <TouchableOpacity
-        style={styles.botao}
-        onPress={() => navigation.navigate('NovoChamado')}
+        style={styles.logoutButton}
+        onPress={() => logout(navigation)}
       >
-        <Text style={styles.botaoTexto}>+ Novo Chamado</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.botao}
-        onPress={() => navigation.navigate('Clientes')}
-      >
-        <Text style={styles.botaoTexto}>Ver Clientes</Text>
+        <Text style={styles.logoutText}>Sair</Text>
       </TouchableOpacity>
     </View>
-  );
-}
+    <FlatList
+      data={chamados}
+      keyExtractor={(item) => (item.id || item._id).toString()}
+      renderItem={({ item }) => {
+        console.log('ITEM:', item);
+        return (
+          <ChamadoItem
+            titulo={item.descricao}
+            status={item.status}
+            clienteNome={getClienteNome(item.cliente_id)}
+            clienteEndereco={getClienteEndereco(item.cliente_id)}
+            prioridade={item.prioridade}
+            dataLimite={item.dataLimite}
+            onEdit={() =>
+              navigation.navigate('EditarChamado', { chamado: item })
+            }
+            onDelete={() => handleDeleteChamado(item.id)}
+          />
+        );
+      }}
+    />
+    <TouchableOpacity
+      style={styles.botao}
+      onPress={() => navigation.navigate('NovoChamado')}
+    >
+      <Text style={styles.botaoTexto}>+ Novo Chamado</Text>
+    </TouchableOpacity>
 
+    <TouchableOpacity
+      style={styles.botao}
+      onPress={() => navigation.navigate('Clientes')}
+    >
+      <Text style={styles.botaoTexto}>Ver Clientes</Text>
+    </TouchableOpacity>
+
+  </View>
+);
+
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 15,
     backgroundColor: '#f2f2f2',
   },
+   header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+
   titulo: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 15,
+    color: '#333',
   },
+
   botao: {
     backgroundColor: '#007bff',
     padding: 15,
@@ -138,7 +156,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
+
   botaoTexto: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+
+  logoutButton: {
+    backgroundColor: '#dc3545',
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 8,
+  },
+
+  logoutText: {
     color: '#fff',
     fontWeight: 'bold',
   },

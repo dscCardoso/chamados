@@ -43,7 +43,7 @@ console.log('TOKEN SALVO:', tokenSalvo);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Chamados TI</Text>
+      <Text style={styles.title}>DeskControl</Text>
 
       <TextInput
         style={styles.input}
