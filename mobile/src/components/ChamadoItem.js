@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { COLORS } from '../theme/colors';
 
 const corPrioridade = {
-  baixa: 'green',
-  media: 'orange',
-  alta: 'red',
-  critica: 'purple'
+  baixa: COLORS.success,
+  media: COLORS.warning,
+  alta: COLORS.danger,
+  critica: '#7c3aed',
 };
 
 export default function ChamadoItem({
@@ -19,17 +20,32 @@ export default function ChamadoItem({
   onDelete
 }) {
   return (
-    <View style={styles.card}>
+    <View
+  style={[
+    styles.card,
+    {
+      borderLeftColor: corPrioridade[prioridade] || COLORS.primary,
+    },
+  ]}
+>
       <Text style={styles.titulo}>{titulo || 'Sem descrição'}</Text>
 
-      <Text style={styles.status}>
-        {status ? status.toUpperCase() : 'SEM STATUS'}
-      </Text>
+      <View style={styles.statusContainer}>
+  <Text style={styles.status}>
+    {status ? status.toUpperCase() : 'SEM STATUS'}
+  </Text>
+</View>
 
       {prioridade && (
-        <Text style={{ color: corPrioridade[prioridade] || 'black' }}>
-          Prioridade: {prioridade}
-        </Text>
+        <Text
+  style={{
+    color: corPrioridade[prioridade] || COLORS.text,
+    fontWeight: 'bold',
+    marginTop: 5,
+  }}
+>
+  Prioridade: {prioridade?.toUpperCase()}
+</Text>
       )}
 
       {dataLimite && (
@@ -61,52 +77,84 @@ export default function ChamadoItem({
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
-    padding: 15,
-    marginBottom: 10,
-    borderRadius: 10,
+    backgroundColor: COLORS.card,
+    padding: 16,
+    marginBottom: 14,
+    borderRadius: 14,
+
+    borderLeftWidth: 6,
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+
     elevation: 3,
   },
+
   titulo: {
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: 'bold',
+    color: COLORS.text,
   },
+
+  statusContainer: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#eff6ff',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 20,
+    marginTop: 8,
+  },
+
   status: {
-    marginTop: 5,
-    color: 'gray',
+    color: COLORS.primary,
+    fontWeight: 'bold',
+    fontSize: 12,
   },
+
   cliente: {
-    marginTop: 5,
-    color: 'blue',
+    marginTop: 10,
+    color: COLORS.textSecondary,
+    fontSize: 14,
   },
+
   endereco: {
-    marginTop: 5,
-    color: 'green',
+    marginTop: 4,
+    color: COLORS.textSecondary,
+    fontSize: 13,
   },
+
   buttonsRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 15,
+    marginTop: 18,
   },
+
   buttonEdit: {
-    backgroundColor: '#28a745',
-    padding: 10,
-    borderRadius: 5,
+    backgroundColor: COLORS.success,
+    padding: 12,
+    borderRadius: 10,
     flex: 1,
     marginRight: 5,
     alignItems: 'center',
   },
+
   buttonDelete: {
-    backgroundColor: '#dc3545',
-    padding: 10,
-    borderRadius: 5,
+    backgroundColor: COLORS.danger,
+    padding: 12,
+    borderRadius: 10,
     flex: 1,
     marginLeft: 5,
     alignItems: 'center',
   },
+
   buttonText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 12,
+    fontSize: 13,
   },
 });
