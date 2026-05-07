@@ -5,10 +5,12 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Alert
+  Alert,
 } from 'react-native';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../services/api';
+import { COLORS } from '../theme/colors';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -23,18 +25,18 @@ export default function LoginScreen({ navigation }) {
     try {
       const response = await api.post('/auth/login', {
         email,
-        senha
+        senha,
       });
 
       if (response.data?.token) {
         await AsyncStorage.setItem('token', response.data.token);
-        const tokenSalvo = await AsyncStorage.getItem('token');
-console.log('TOKEN SALVO:', tokenSalvo);
+
+        console.log('TOKEN SALVO:', response.data.token);
+
         navigation.replace('App');
       } else {
         Alert.alert('Erro', 'Resposta inválida do servidor');
       }
-
     } catch (error) {
       console.log(error);
       Alert.alert('Erro', 'Usuário ou senha inválidos');
@@ -43,27 +45,44 @@ console.log('TOKEN SALVO:', tokenSalvo);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>DeskControl</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Usuário ou Email"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-      />
+      <Text style={styles.logo}>DeskControl</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        value={senha}
-        onChangeText={setSenha}
-        secureTextEntry
-      />
+      <Text style={styles.subtitle}>
+        Gestão inteligente de chamados
+      </Text>
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Entrar</Text>
-      </TouchableOpacity>
+      <View style={styles.card}>
+
+        <TextInput
+          style={styles.input}
+          placeholder="Digite seu email"
+          placeholderTextColor="#999"
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Digite sua senha"
+          placeholderTextColor="#999"
+          value={senha}
+          onChangeText={setSenha}
+          secureTextEntry
+        />
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleLogin}
+        >
+          <Text style={styles.buttonText}>
+            Entrar
+          </Text>
+        </TouchableOpacity>
+
+      </View>
+
     </View>
   );
 }
@@ -71,33 +90,67 @@ console.log('TOKEN SALVO:', tokenSalvo);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: COLORS.background,
     justifyContent: 'center',
-    padding: 20,
-    backgroundColor: '#f2f2f2'
+    padding: 24,
   },
-  title: {
-    fontSize: 28,
+
+  logo: {
+    fontSize: 38,
     fontWeight: 'bold',
-    marginBottom: 40,
+    color: COLORS.primary,
     textAlign: 'center',
-    color: '#333'
   },
+
+  subtitle: {
+    textAlign: 'center',
+    color: COLORS.textSecondary,
+    marginTop: 8,
+    marginBottom: 40,
+    fontSize: 16,
+  },
+
+  card: {
+    backgroundColor: COLORS.card,
+    borderRadius: 18,
+    padding: 24,
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+
+    elevation: 4,
+  },
+
   input: {
-    backgroundColor: '#fff',
-    padding: 15,
-    borderRadius: 8,
-    marginBottom: 15,
+    backgroundColor: '#f9fafb',
     borderWidth: 1,
-    borderColor: '#ddd'
+    borderColor: COLORS.border,
+
+    padding: 16,
+    borderRadius: 12,
+
+    marginBottom: 16,
+
+    fontSize: 15,
+    color: COLORS.text,
   },
+
   button: {
-    backgroundColor: '#007bff',
-    padding: 15,
-    borderRadius: 8,
-    alignItems: 'center'
+    backgroundColor: COLORS.primary,
+    padding: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginTop: 10,
   },
+
   buttonText: {
     color: '#fff',
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
 });
